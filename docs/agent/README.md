@@ -1,7 +1,10 @@
 # Agent documentation index
 
 Planning and implementation notes for Restore Credentials in this plugin.
-**Status: planned, not implemented.** Dart still exposes only `getPlatformVersion`.
+**Status: client-side implemented (Phases 1–4).** Dart exposes
+`createRestoreKey` / `getRestoreKey` / `clearRestoreKey`; Kotlin
+`RestoreCredentialsClient` wraps `androidx.credentials` 1.6.0 with E2EE retry
+and an API 28+ guard. Optional `BackupAgent` helper is not yet provided.
 
 | Doc | Contents |
 | --- | --- |

@@ -93,6 +93,31 @@ and `PublicKeyCredentialRequestOptionsJSON` for get. The plugin passes strings
 through; it does not parse WebAuthn JSON beyond what `androidx.credentials`
 validates.
 
+### Host integration (two-tier restoration)
+
+Restore Credentials should be driven from **two tiers** in the host app:
+
+1. **Tier 1 — background (`BackupAgent.onRestoreFinished`):** if the host
+   manifest has `android:allowBackup="true"`, call the **Kotlin**
+   `RestoreCredentialsClient.getRestoreKey` synchronously (e.g. `runBlocking`)
+   inside `onRestoreFinished` so sign-in completes before first UI. Do **not**
+   use `onRestore` (key-value only). The plugin does **not** register a
+   `BackupAgent` for you; hosts subclass their own and call the same Kotlin
+   client. Do **not** change `allowBackup`.
+
+2. **Tier 2 — foreground (first launch):** in the launcher `Activity.onCreate`
+   / Flutter first frame, call `getRestoreKey` to cover the cases where
+   background restore did not complete, backup is off, or restore is
+   independent of app-data backup. This is what the `example/` app
+   demonstrates.
+
+Create a restore key when the user is signed in (after sign-up / sign-in, or on
+a later launch if already signed in and no key yet). Keep a local flag such as
+`has_synced_restore_credential` so you do not create on every launch. Call
+`clearRestoreKey` on logout — Credential Manager will **not** delete restore
+keys on sign-out automatically, and a typeless `clearCredentialState` does
+**not** remove restore keys.
+
 ### `PlatformException` codes
 
 Native failures surface as `PlatformException` with stable `code` values:
