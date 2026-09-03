@@ -17,6 +17,8 @@ and an API 28+ guard. Optional `BackupAgent` helper is not yet provided.
 | [06-implementation-plan.md](06-implementation-plan.md) | Ordered work, files, acceptance checks |
 | [07-backend-reminders.md](07-backend-reminders.md) | RP/server notes to show humans (never implement here) |
 | [08-testing.md](08-testing.md) | Unit / example / device testing |
+| [09-flutter-app-integration.md](09-flutter-app-integration.md) | For agents wiring the plugin into a host Flutter app: flows, device ids, parameters to resolve |
+| [10-backend-integration.md](10-backend-integration.md) | For agents implementing the RP server: endpoints, stale challenges, per-device storage, TTL |
 
 Canonical Android client skill (Google): [android/skills identity/restore-credentials](https://github.com/android/skills/blob/main/identity/restore-credentials/SKILL.md).
 

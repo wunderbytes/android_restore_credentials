@@ -181,7 +181,9 @@ keys. Adapted from Google's Restore Credentials client skill (2026-08-21):
 The same RP stack as passkeys can verify restore keys, but **persist them as a
 separate class**. See [Play Help — Zero-Tap Sign-In Restoration](https://support.google.com/googleplay/android-developer/answer/17492799#zero-tap_sign-in_restoration)
 and the [Android Restore Credentials implementation guide](https://developer.android.com/identity/sign-in/restore-credentials-implementation).
-Full agent notes live in [`docs/agent/07-backend-reminders.md`](docs/agent/07-backend-reminders.md).
+Full agent notes live in [`docs/agent/07-backend-reminders.md`](docs/agent/07-backend-reminders.md),
+with detailed guides for [Flutter app integration](docs/agent/09-flutter-app-integration.md)
+and [backend integration](docs/agent/10-backend-integration.md).
 
 ## Example
 
