@@ -90,9 +90,9 @@ Native Android code lives in
 `android/src/main/kotlin/eu/wunderbytes/android_restore_credentials/`.
 Dart API and method-channel wiring live in `lib/`.
 
-Planned (not implemented): create, retrieve, and clear restore credentials
-through Credential Manager, matching the
-[Restore Credentials implementation guide](https://developer.android.com/identity/sign-in/restore-credentials-implementation).
+Planned (not implemented): `createRestoreKey`, `getRestoreKey`, and
+`clearRestoreKey`. Architecture and implementation notes for agents are in
+[AGENTS.md](AGENTS.md) and [docs/agent/](docs/agent/README.md).
 
 ## License
 
