@@ -34,13 +34,9 @@ open class RestoreCredentialsClient internal constructor(
     private val sdkInt: Int,
 ) {
     // Class is `open` so tests can substitute a fake client in the plugin.
-    @JvmOverloads
-    constructor(
-        context: Context,
-        credentialManager: CredentialManager = CredentialManager.create(context),
-    ) : this(
+    constructor(context: Context) : this(
         context = context,
-        operations = CredentialManagerCredentialOperations(credentialManager),
+        operations = CredentialManagerCredentialOperations(CredentialManager.create(context)),
         sdkInt = Build.VERSION.SDK_INT,
     )
 

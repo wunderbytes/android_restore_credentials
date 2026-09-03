@@ -105,6 +105,25 @@ Restore Credentials should be driven from **two tiers** in the host app:
    `BackupAgent` for you; hosts subclass their own and call the same Kotlin
    client. Do **not** change `allowBackup`.
 
+   This runs **without a Flutter engine**, so the host must do the backend
+   calls in Kotlin directly (fetch options from the RP, call the client, POST
+   the assertion, persist the session). The plugin only provides the client:
+
+   ```kotlin
+   class MyBackupAgent : BackupAgentHelper() {
+       override fun onRestoreFinished() {
+           runBlocking {
+               val options = myRp.fetchRestoreCredentialRequestOptions() // your Kotlin API
+               val assertion = RestoreCredentialsClient(applicationContext)
+                   .getRestoreKey(requestJson = options)
+               myRp.verifyRestoreCredentialAndSignIn(assertion)          // your Kotlin API
+           }
+       }
+   }
+   ```
+   Register it only in the **app** manifest: `android:allowBackup="true"` +
+   `android:backupAgent=".MyBackupAgent"`.
+
 2. **Tier 2 — foreground (first launch):** in the launcher `Activity.onCreate`
    / Flutter first frame, call `getRestoreKey` to cover the cases where
    background restore did not complete, backup is off, or restore is
@@ -138,6 +157,31 @@ Native failures surface as `PlatformException` with stable `code` values:
 
 Create retries locally on `E2eeUnavailableException` before surfacing
 `e2ee_unavailable`, so that code is rare.
+
+## Backend requirements
+
+This plugin is **client-side only**. Your relying-party (RP) server must
+implement the WebAuthn registration/assertion verification and store restore
+keys. Adapted from Google's Restore Credentials client skill (2026-08-21):
+
+1. **Differentiate restore credentials from passkeys in storage.** Standard
+   WebAuthn often assumes user verification. Restore keys are system-managed
+   and hidden. Use a distinct credential type or metadata. Do not show them on
+   passkey management screens. Background restore may skip explicit UV.
+2. **Prevent orphaned keys.** Uninstall / clear-data deletes the **local** key
+   and does not call the server. Plan cleanup: replace old keys on new
+   registration, TTL unused keys, at most one key per user per device.
+3. **Balance lifespan and TTL.** If the user restores, then signs out on the
+   **old** device, local clear must not immediately invalidate the key the
+   **new** device still needs. TTL should survive that transition; delete
+   based on registration/usage rules, not only on client clear.
+4. **Support multiple devices.** Schema: multiple active restore credentials
+   per user (e.g. per device id), not 1:1 user↔key.
+
+The same RP stack as passkeys can verify restore keys, but **persist them as a
+separate class**. See [Play Help — Zero-Tap Sign-In Restoration](https://support.google.com/googleplay/android-developer/answer/17492799#zero-tap_sign-in_restoration)
+and the [Android Restore Credentials implementation guide](https://developer.android.com/identity/sign-in/restore-credentials-implementation).
+Full agent notes live in [`docs/agent/07-backend-reminders.md`](docs/agent/07-backend-reminders.md).
 
 ## Example
 
