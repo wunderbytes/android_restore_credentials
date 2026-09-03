@@ -1,0 +1,32 @@
+name: android_restore_credentials
+description: Android-only Flutter plugin for Zero-Tap sign-in restoration via Credential Manager Restore Credentials.
+version: 0.0.1
+homepage: https://github.com/wunderbytes/android_restore_credentials
+repository: https://github.com/wunderbytes/android_restore_credentials
+issue_tracker: https://github.com/wunderbytes/android_restore_credentials/issues
+topics:
+  - android
+  - credential-manager
+  - restore-credentials
+  - sign-in
+
+environment:
+  sdk: ^3.9.2
+  flutter: '>=3.35.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: eu.wunderbytes.android_restore_credentials
+        pluginClass: AndroidRestoreCredentialsPlugin
