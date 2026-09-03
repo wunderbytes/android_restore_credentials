@@ -23,7 +23,8 @@ fvm flutter run
 ```
 
 > Restore Credentials require Android 9 (API 28)+ and Google Play services
-> 24220000+. On API 24–27 the plugin returns `unsupported_android_version`.
+> 24220000+ (version 24.22 or newer). On API 24–27 the plugin returns
+> `unsupported_android_version`.
 
 See the main repo [README](../README.md) for the host integration (two-tier)
 guidance and `PlatformException` codes.

@@ -16,7 +16,7 @@ must be stored and displayed as a **separate** credential type on the RP.
 | Requirement | Value |
 | --- | --- |
 | OS | Android 9 (API 28)+ |
-| GMS core | 24220000+ |
+| GMS core | 24220000+ (version 24.22 or newer) |
 | Library | `androidx.credentials` 1.5.0+ (prefer latest **stable**) |
 | Play form factors | Mobile / tablet only |
 | Play enforcement | April 2027 (see Play Help; exceptions exist) |

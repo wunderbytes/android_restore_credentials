@@ -32,8 +32,8 @@ chooses to restore data (device-to-device or cloud backup).
 Manual sign-in during device setup adds friction and can expose users to
 phishing. The [Android Restore Credentials API](https://developer.android.com/identity/sign-in/restore-credentials)
 is the primary way to meet this requirement. It is available from **Android 9**
-and requires Google Play services (GMS) core **24220000+** and
-`androidx.credentials` **1.5.0+**.
+and requires Google Play services (GMS) core **24220000+** (version **24.22** or
+newer) and `androidx.credentials` **1.5.0+**.
 
 The requirement currently applies to **mobile and tablet** form factors only.
 
@@ -205,6 +205,15 @@ Dart API and method-channel wiring live in `lib/`.
 Planned (not implemented): optional `BackupAgent` helper hosts can subclass.
 Architecture and implementation notes for agents are in
 [AGENTS.md](AGENTS.md) and [doc/agent/](doc/agent/README.md).
+
+## About WunderBytes
+
+This plugin is developed and maintained with 💙 by
+[WunderBytes](https://wunderbytes.eu/) — *We get IT done!* 
+an expert in AI integrations and custom mobile & app development
+
+Need help integrating Restore Credentials or building a Flutter app? Reach out
+at [wunderbytes.eu](https://wunderbytes.eu/) or [hello@wunderbytes.eu](mailto:hello@wunderbytes.eu).
 
 ## License
 

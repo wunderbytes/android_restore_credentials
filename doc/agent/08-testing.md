@@ -18,7 +18,7 @@
 
 Emulator/device (manual, later):
 
-- API 28+ with Play services ≥ 24220000
+- API 28+ with Play services ≥ 24220000 (version 24.22 or newer)
 - Create with screen lock + backup on (cloud path)
 - Create with backup/E2EE off (retry path)
 - Get with no key → `no_credential`
