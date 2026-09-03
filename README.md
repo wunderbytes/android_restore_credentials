@@ -7,9 +7,9 @@ This package is intended to help Flutter apps meet Google Play’s upcoming
 [Zero-Tap Sign-In Restoration](https://support.google.com/googleplay/android-developer/answer/17492799#zero-tap_sign-in_restoration)
 requirement by wrapping Android’s Restore Credentials APIs.
 
-> **Status:** the plugin project is scaffolded. Restore Credentials create / get / clear
-> APIs are not implemented yet. The current Dart surface is the default Flutter plugin
-> template (`getPlatformVersion`).
+> **Status:** Restore Credentials create / get / clear are implemented on
+> Android (Kotlin client + Dart facade). iOS / web / desktop are intentionally
+> not supported.
 
 ## Platform support
 
@@ -73,6 +73,47 @@ dependencies:
     path: ../android_restore_credentials
 ```
 
+## API
+
+```dart
+final plugin = AndroidRestoreCredentials();
+
+// After sign-in, with `requestJson` fetched from your RP server.
+final attestation = await plugin.createRestoreKey(requestJson: requestJson);
+
+// On first launch / BackupAgent restore, with `requestJson` fetched from your RP.
+final assertion = await plugin.getRestoreKey(requestJson: requestJson);
+
+// On sign-out.
+await plugin.clearRestoreKey();
+```
+
+`requestJson` is WebAuthn `PublicKeyCredentialCreationOptionsJSON` for create
+and `PublicKeyCredentialRequestOptionsJSON` for get. The plugin passes strings
+through; it does not parse WebAuthn JSON beyond what `androidx.credentials`
+validates.
+
+### `PlatformException` codes
+
+Native failures surface as `PlatformException` with stable `code` values:
+
+| Code | Typical cause |
+| --- | --- |
+| `invalid_argument` | Missing/blank `requestJson`; invalid WebAuthn JSON / `user.id` |
+| `unsupported_android_version` | Device API < 28 (Android 9) |
+| `create_dom` | `CreateRestoreCredentialDomException` (malformed creation options) |
+| `e2ee_unavailable` | Cloud backup requested but unavailable, and the local retry also failed |
+| `no_credential` | `NoCredentialException` on get (nothing to restore) |
+| `get_interrupted` / `get_canceled` | Get interrupted or canceled |
+| `get_failed` | Other `GetCredentialException` |
+| `create_failed` | Other `CreateCredentialException` |
+| `clear_failed` | `ClearCredentialException` |
+| `unexpected_type` | Response credential was not `RestoreCredential` |
+| `unknown` | Anything else |
+
+Create retries locally on `E2eeUnavailableException` before surfacing
+`e2ee_unavailable`, so that code is rare.
+
 ## Example
 
 The `example/` app is a standard Flutter plugin example (Android only). From the
@@ -90,8 +131,8 @@ Native Android code lives in
 `android/src/main/kotlin/eu/wunderbytes/android_restore_credentials/`.
 Dart API and method-channel wiring live in `lib/`.
 
-Planned (not implemented): `createRestoreKey`, `getRestoreKey`, and
-`clearRestoreKey`. Architecture and implementation notes for agents are in
+Planned (not implemented): optional `BackupAgent` helper hosts can subclass.
+Architecture and implementation notes for agents are in
 [AGENTS.md](AGENTS.md) and [docs/agent/](docs/agent/README.md).
 
 ## License
