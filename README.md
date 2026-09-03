@@ -181,9 +181,9 @@ keys. Adapted from Google's Restore Credentials client skill (2026-08-21):
 The same RP stack as passkeys can verify restore keys, but **persist them as a
 separate class**. See [Play Help — Zero-Tap Sign-In Restoration](https://support.google.com/googleplay/android-developer/answer/17492799#zero-tap_sign-in_restoration)
 and the [Android Restore Credentials implementation guide](https://developer.android.com/identity/sign-in/restore-credentials-implementation).
-Full agent notes live in [`docs/agent/07-backend-reminders.md`](docs/agent/07-backend-reminders.md),
-with detailed guides for [Flutter app integration](docs/agent/09-flutter-app-integration.md)
-and [backend integration](docs/agent/10-backend-integration.md).
+Full agent notes live in [`doc/agent/07-backend-reminders.md`](doc/agent/07-backend-reminders.md),
+with detailed guides for [Flutter app integration](doc/agent/09-flutter-app-integration.md)
+and [backend integration](doc/agent/10-backend-integration.md).
 
 ## Example
 
@@ -204,7 +204,7 @@ Dart API and method-channel wiring live in `lib/`.
 
 Planned (not implemented): optional `BackupAgent` helper hosts can subclass.
 Architecture and implementation notes for agents are in
-[AGENTS.md](AGENTS.md) and [docs/agent/](docs/agent/README.md).
+[AGENTS.md](AGENTS.md) and [doc/agent/](doc/agent/README.md).
 
 ## License
 

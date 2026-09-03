@@ -8,9 +8,9 @@ Use [FVM](https://fvm.app/) (`fvm flutter …`). Pinned SDK: **3.35.7** (`.fvmrc
 
 ## Before changing code
 
-1. Read `docs/agent/README.md` and the implementation plan.
+1. Read `doc/agent/README.md` and the implementation plan.
 2. Do **not** implement Restore Credentials until a human asks for implementation.
-3. This plugin wraps **client-side** `androidx.credentials` only. Do **not** implement relying-party / WebAuthn server code. After client work, remind the human of `docs/agent/07-backend-reminders.md` (copy those points; do not code them).
+3. This plugin wraps **client-side** `androidx.credentials` only. Do **not** implement relying-party / WebAuthn server code. After client work, remind the human of `doc/agent/07-backend-reminders.md` (copy those points; do not code them).
 
 ## Non-negotiables
 
@@ -30,7 +30,7 @@ Use [FVM](https://fvm.app/) (`fvm flutter …`). Pinned SDK: **3.35.7** (`.fvmrc
 | `lib/` | Dart API, platform interface, method channel |
 | `android/` | Kotlin plugin + (planned) public Credential Manager client |
 | `example/` | Android example app |
-| `docs/agent/` | Spec and implementation plan for agents |
+| `doc/agent/` | Spec and implementation plan for agents |
 
 ## Verify
 
